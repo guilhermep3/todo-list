@@ -5,14 +5,18 @@ import { GroupAside } from "./group-aside";
 import { useTodoStore } from "@/app/store/store";
 import { inputStyle } from "@/utils/inputstyle";
 
-
-export const Aside = () => {
+type props = {
+   showAsideMobile: boolean;
+}
+export const Aside = ({showAsideMobile}: props) => {
    const { groups, tasks, searchQuery, setSearchQuery } = useTodoStore();
    const totalTasks = tasks.length;
    const completedTasks = tasks.filter((task) => task.completed).length;
 
    return (
-      <aside className="w-64 h-screen border-r p-4 flex flex-col gap-6">
+      <aside
+         className={`fixed ${showAsideMobile ? 'left-0' : '-left-80'} md:left-0 transition-all duration-500
+            overflow-y-scroll w-72 h-screen border-r p-4 flex flex-col gap-6 z-10 bg-white dark:bg-black`}>
          <div className="flex items-center justify-between gap-2">
             <div className="flex gap-2">
                <ListTodo size={32} />

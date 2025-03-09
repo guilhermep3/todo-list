@@ -54,7 +54,7 @@ export const GroupMain = ({ group, tasks }: props) => {
    };
 
    return (
-      <div className="my-5">
+      <div className="my-5 border-2 p-2 rounded-lg" style={{borderColor: group.color}}>
          <div className="flex gap-2 items-center">
             <Popover open={open} onOpenChange={setOpen}>
                <PopoverTrigger className="-mb-2">
@@ -71,7 +71,7 @@ export const GroupMain = ({ group, tasks }: props) => {
                ?
                <>
                   <input type="text"
-                     className="text-xl font-semibold p-1 border border-zinc-300 dark:border-zinc-800 focus:border-zinc-500 focus:dark:border-zinc-600 rounded-md outline-none"
+                     className={`${inputStyle} text-xl font-semibold p-1`}
                      value={editingGroupName}
                      onChange={(e) => setEditingGroupName(e.target.value)}
                      onKeyDown={(e) => e.key === 'Enter' && handleUpdateGroupName()}
@@ -82,14 +82,14 @@ export const GroupMain = ({ group, tasks }: props) => {
                :
                <>
                   <p className="text-xl font-semibold mr-4 p-1">{group.name}</p>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ml-auto md:ml-0">
                      <Pen size={20} onClick={() => setisEditingGroupName(true)} className="cursor-pointer hover:opacity-70 transition ml-5" />
                      <Trash2 size={20} onClick={() => deleteGroup(group.id)} className="hover:text-red-600 transition cursor-pointer" />
                   </div>
                </>
             }
          </div>
-         <div className="flex gap-2 items-center mt-1 ">
+         <div className="flex gap-2 items-center my-3 ">
             <input type="text"
                className={`${inputStyle} flex-1`}
                placeholder="Adicione uma tarefa..."
@@ -105,8 +105,12 @@ export const GroupMain = ({ group, tasks }: props) => {
          <div className="my-2">
             {tasks.map(task => (
                <div key={task.id}
-                  className={`flex items-center justify-between w-full my-1 p-2 rounded-lg border border-l-4`}
-                  style={{borderColor: group.color}}
+                  className={`flex items-center justify-between m-2 p-2 rounded-lg border `}
+                  style={
+                     {borderColor: group.color,
+                        background: task.completed ? `linear-gradient(to right, ${group.color}, transparent)` : ''
+                     }
+                  }
                >
                   <div className="flex items-center gap-2">
                      <Checkbox
@@ -129,7 +133,7 @@ export const GroupMain = ({ group, tasks }: props) => {
                         </div>
                         :
                         <div className="flex">
-                           <p className="p-1">{task.title}</p>
+                           <p className={`p-1 ${task.completed ? 'line-through' : ''}`}>{task.title}</p>
                         </div>
                      }
                   </div>
