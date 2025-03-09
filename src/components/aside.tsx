@@ -16,11 +16,11 @@ export const Aside = ({showAsideMobile}: props) => {
    return (
       <aside
          className={`fixed ${showAsideMobile ? 'left-0' : '-left-80'} md:left-0 transition-all duration-500
-            overflow-y-scroll w-72 h-screen border-r p-4 flex flex-col gap-6 z-10 bg-white dark:bg-black`}>
+            overflow-y-scroll w-72 h-screen border-r p-4 flex flex-col gap-6 z-30 bg-white dark:bg-black`}>
          <div className="flex items-center justify-between gap-2">
             <div className="flex gap-2">
                <ListTodo size={32} />
-               <h1 className="font-bold text-xl">Tarefando</h1>
+               <h1 className="font-bold text-xl">Afazeres</h1>
             </div>
             <ThemeToggle />
          </div>

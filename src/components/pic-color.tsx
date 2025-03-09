@@ -17,7 +17,7 @@ export const PicColor = ({ groupId, closePopover }: Props) => {
    const colors = [
       "#ec4899", // pink-500
       "#a855f7", // purple-500
-      "#3b82f6", // blue-500
+      "#00a6f4", // sky-500
       "#1d4ed8", // blue-700
       "#22c55e", // green-500
       "#15803d", // green-700

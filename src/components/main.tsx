@@ -11,7 +11,7 @@ type props = {
    showAsideMobile: boolean;
    setShowAsideMobile: (showAsideMobile: boolean) => void;
 }
-export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
+export const Main = ({ showAsideMobile, setShowAsideMobile }: props) => {
    const [isOpenDialog, setIsOpenDialog] = useState(false);
    const [newGroupName, setNewGroupName] = useState("");
    const { groups, addGroup, tasks, searchQuery } = useTodoStore();
@@ -21,10 +21,11 @@ export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
          addGroup({
             id: crypto.randomUUID(),
             name: newGroupName,
-            color: '#3b82f6',
+            color: '#00a6f4',
             createdAt: new Date(),
          });
          setIsOpenDialog(false);
+         setNewGroupName('');
       };
    };
 
@@ -33,23 +34,25 @@ export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
    );
 
    const filteredGroups = searchQuery
-      ? groups.filter((group) => 
+      ? groups.filter((group) =>
          filteredTasks.some((task) => task.groupId === group.id)
       )
       : groups
 
    return (
-      <main className="flex-1 p-3 md:p-6 md:pl-[300px] overflow-auto">
+      <main className="flex-1 p-3 md:p-6 md:pl-[300px] overflow-auto min-h-screen relative" style={{}}>
+         <div className={`z-20 absolute top-0 right-0 w-full h-full bg-black/50 ${showAsideMobile ? 'block' : 'hidden'}`}
+            onClick={() => setShowAsideMobile(false)}></div>
          <div className="max-w-4xl mx-auto">
             <div className="flex justify-between items-center">
                <p className="font-bold text-xl md:text-2xl">Minhas tarefas</p>
                <div className="flex items-center gap-2">
                   <Button icon={<FolderPlus />} text="Criar grupo" onClick={() => setIsOpenDialog(true)} />
-                  <Menu size={32} onClick={() => setShowAsideMobile(!showAsideMobile)} className="block md:hidden" />
+                  <Menu size={32} onClick={() => setShowAsideMobile(!showAsideMobile)} className="block md:hidden z-20" />
                </div>
                {isOpenDialog &&
                   <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
-                     <DialogContent>
+                     <DialogContent className="-mt-10 md:mt-0">
                         <DialogHeader>
                            <DialogTitle>Crie um novo grupo</DialogTitle>
                         </DialogHeader>
@@ -67,6 +70,10 @@ export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
                }
             </div>
             <div className="mt-4">
+               {groups.length === 0 &&
+                  <div className="text-base text-center my-10 text-zinc-700 dark:text-zinc-300">
+                     Crie um grupo de tarefas.
+                  </div>}
                {filteredGroups.map(group => (
                   <GroupMain key={group.id}
                      group={group}
@@ -75,6 +82,9 @@ export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
                ))}
             </div>
          </div>
+         <footer className="text-center my-10">
+            <p className="text-zinc-500 text-sm">Desenvolvido por <a href="https://github.com/guilhermep3" target="_blank" className="underline">Guilherme Pereira</a></p>
+         </footer>
       </main>
    )
 }

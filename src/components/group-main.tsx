@@ -53,8 +53,12 @@ export const GroupMain = ({ group, tasks }: props) => {
       };
    };
 
+   function handleCancelTaskUpdate(taskId: string){
+      setEditingTaskId(null);
+   }
+
    return (
-      <div className="my-5 border-2 p-2 rounded-lg" style={{borderColor: group.color}}>
+      <div className="my-6 border-2 p-2 rounded-lg" style={{borderColor: group.color}}>
          <div className="flex gap-2 items-center">
             <Popover open={open} onOpenChange={setOpen}>
                <PopoverTrigger className="-mb-2">
@@ -71,12 +75,12 @@ export const GroupMain = ({ group, tasks }: props) => {
                ?
                <>
                   <input type="text"
-                     className={`${inputStyle} text-xl font-semibold p-1`}
+                     className={`${inputStyle} text-xl font-semibold p-1 w-full`}
                      value={editingGroupName}
                      onChange={(e) => setEditingGroupName(e.target.value)}
                      onKeyDown={(e) => e.key === 'Enter' && handleUpdateGroupName()}
                   />
-                  <Button paddingSmall={true} text="salvar" onClick={handleUpdateGroupName} />
+                  <Button text="salvar" onClick={handleUpdateGroupName} paddingSmall={true} textSm={true} />
                   <X size={24} onClick={() => setisEditingGroupName(false)} className="cursor-pointer" />
                </>
                :
@@ -105,7 +109,7 @@ export const GroupMain = ({ group, tasks }: props) => {
          <div className="my-2">
             {tasks.map(task => (
                <div key={task.id}
-                  className={`flex items-center justify-between m-2 p-2 rounded-lg border `}
+                  className={`flex items-center justify-between m-0 md:m-2 p-2 rounded-lg border `}
                   style={
                      {borderColor: group.color,
                         background: task.completed ? `linear-gradient(to right, ${group.color}, transparent)` : ''
@@ -120,16 +124,16 @@ export const GroupMain = ({ group, tasks }: props) => {
                      />
                      {editingTaskId === task.id
                         ?
-                        <div className="flex items-center gap-2 flex-1">
+                        <div className="flex items-center gap-1 md:gap-2 flex-1">
                            <input type="text"
-                              className={`${inputStyle} w-60`}
+                              className={`${inputStyle} w-full md:w-60`}
                               value={newTaskTitle}
                               onChange={(e) => setNewTaskTitle(e.target.value)}
                               onKeyDown={(e) => e.key === 'Enter' && handleUpdateTask(task.id)}
                               placeholder={task.title}
                            />
-                           <Button text="Salvar" onClick={() => handleUpdateTask(task.id)} paddingSmall={true} />
-                           <X size={24} onClick={() => handleUpdateTask(task.id)} className="cursor-pointer" />
+                           <Button text="Salvar" onClick={() => handleUpdateTask(task.id)} paddingSmall={true} textSm={true} />
+                           <X size={28} onClick={() => handleCancelTaskUpdate(task.id)} className="cursor-pointer mr-1" />
                         </div>
                         :
                         <div className="flex">
@@ -139,7 +143,7 @@ export const GroupMain = ({ group, tasks }: props) => {
                   </div>
                   <div className="flex gap-3">
                      {editingTaskId
-                        ? <IterationCw size={20} onClick={() => handleEditTask(task)} className="cursor-pointer hover:opacity-70 transition" />
+                        ? <IterationCw size={20} onClick={() => handleEditTask(task)} className="cursor-pointer hover:opacity-70 transition hidden md:block" />
                         : <Pen size={20} onClick={() => handleEditTask(task)} className="cursor-pointer hover:opacity-70 transition" />
                      }
                      <Trash2 size={20} onClick={() => deleteTask(task.id)} className="hover:text-red-600 transition cursor-pointer" />
