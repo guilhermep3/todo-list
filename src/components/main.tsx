@@ -45,7 +45,7 @@ export const Main = ({showAsideMobile, setShowAsideMobile}: props) => {
                <p className="font-bold text-xl md:text-2xl">Minhas tarefas</p>
                <div className="flex items-center gap-2">
                   <Button icon={<FolderPlus />} text="Criar grupo" onClick={() => setIsOpenDialog(true)} />
-                  <Menu size={32} onClick={() => setShowAsideMobile(!showAsideMobile)} />
+                  <Menu size={32} onClick={() => setShowAsideMobile(!showAsideMobile)} className="block md:hidden" />
                </div>
                {isOpenDialog &&
                   <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
